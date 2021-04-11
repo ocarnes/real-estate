@@ -15,7 +15,7 @@ This project was created out of my frustration at not being able to gain access 
 * [To Do](#to-do)
 
 ## Data Collection ##
-Data is scraped from Zillow a few times a day using containerized web scraping scripts run on Kubernetes. I borrowed heavily from Gabe Weiss's [Cloud SQL - Kubernetes Sidecar tutorial](https://medium.com/google-cloud/connecting-cloud-sql-kubernetes-sidecar-46e016e07bb4) to get everything up and running on Kubernetes.
+Data is scraped from Zillow a few times a day using containerized web scraping scripts run on Kubernetes.
 1. Scraping container: The scraping is mostly performed using Python's requests package and data upload is performed with sqlalchemy. I've also included a little selenium script that runs if a captcha is detected.
 2. Authentication container: image for running Cloud SQL proxy to connect the scraping container to Cloud SQL.
 
