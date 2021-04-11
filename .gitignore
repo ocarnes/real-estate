@@ -4,6 +4,8 @@
 
 # Jupyter Notebook
 .ipynb_checkpoints
+*.ipynb
+
 
 # Flask app
 App/
