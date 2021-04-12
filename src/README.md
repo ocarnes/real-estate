@@ -16,6 +16,15 @@ Create Google Kubernetes Engine (GKE) cluster
 ```
 gcloud container clusters create zillow-scraper-cluster --zone us-central1-f --machine-type=n1-standard-1 --max-nodes=5 --min-nodes=1
 ```
+Add credentials to cluster
+```
+kubectl create secret generic cloudsql-instance-credentials --from-file=sql_credentials.json=<service_account_json_file>
+
+kubectl create secret generic cloudsql-db-credentials --from-literal=username=[DB_USER] --from-literal=password=[DB_PASS] --from-literal=dbname=[DB_NAME]
+
+gcloud container clusters get-credentials zillow-scraper-cluster --zone us-central1-f
+```
+
 Add container from GCR to GKE
 ```
 kubectl create -f zillow_scraper.yaml
@@ -27,7 +36,7 @@ kubectl get pods
 ```
 Check container logs to see any errors present
 ```
-kubectl logs zillow-scraper-8566db5bf7-xwr45 zillow-scraper
+kubectl logs zillow-scraper-8566db5bf7-p9xs8 zillow-scraper
 ```
 Scale down to zero replicas
 ```

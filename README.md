@@ -39,6 +39,7 @@ Data is uploaded from raw json format into a postgres instance on Cloud SQL. Som
 1. Cross check previous 'FOR_SALE' listings against current 'FOR_SALE' listings and update accordingly
 2. Make 'daysOnZillow' a calculated column
 3. Freeze 'daysOnZillow' after listing marked sold (calculate based on priceHistory)
+4. Clean up bad entries (ex: zpid 6 not valid)
 
 ## Additional features to consider from denver.gov ##
 1. [School distance and rating](https://www.greatschools.org/school?id=00506&state=CO)
