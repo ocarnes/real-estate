@@ -6,7 +6,7 @@ import pandas as pd
 
 class CloudQuery:
     def __init__(self):
-        self.SQL_HOST = os.environ.get("SQL_HOST", "127.0.0.1") # Defaults to using localhost/Cloud SQL Proxy
+        self.SQL_HOST = os.environ.get("SQL_HOST", None) # Defaults to using localhost/Cloud SQL Proxy
         self.DB_PORT  = os.environ.get("DB_PORT", 5432)
         self.DB_USER  = os.environ.get("DB_USER", None)
         self.DB_PASS  = os.environ.get("DB_PASS", None)
@@ -23,7 +23,6 @@ class CloudQuery:
                     database=self.DB_NAME  # e.g. "my-database-name"
                 ),
             )
-        # engine = create_engine("postgresql://self.DB_USER:xL6HkMHPvE82wNE6@127.0.0.1:1433/postgres")
         self.connection = self.engine.connect()
         self.meta = sqlalchemy.MetaData()
         self.meta.reflect(bind=self.engine)
