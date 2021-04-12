@@ -55,5 +55,6 @@ ENV DB_USER "<user>"
 ENV DB_PASS "<password>"
 ENV DB_NAME "<db name>"
 ENV SQL_HOST "<database IP>"
+ENV DB_PORT "<db port>"
 
 CMD [ "python", "./src/scraper.py" ]

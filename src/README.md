@@ -20,7 +20,7 @@ Add credentials to cluster
 ```
 kubectl create secret generic cloudsql-instance-credentials --from-file=sql_credentials.json=<service_account_json_file>
 
-kubectl create secret generic cloudsql-db-credentials --from-literal=username=[DB_USER] --from-literal=password=[DB_PASS] --from-literal=dbname=[DB_NAME]
+kubectl create secret generic cloudsql-db-credentials --from-literal=username=[DB_USER] --from-literal=password=[DB_PASS] --from-literal=dbname=[DB_NAME] --from-literal=sqlhost=[SQL_HOST] --from-literal=dbport=[DB_PORT]
 
 gcloud container clusters get-credentials zillow-scraper-cluster --zone us-central1-f
 ```
@@ -36,7 +36,7 @@ kubectl get pods
 ```
 Check container logs to see any errors present
 ```
-kubectl logs zillow-scraper-8566db5bf7-p9xs8 zillow-scraper
+kubectl logs zillow-scraper-6cfd6b9894-jxjtp zillow-scraper --previous
 ```
 Scale down to zero replicas
 ```

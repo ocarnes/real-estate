@@ -7,7 +7,7 @@ import pandas as pd
 class CloudQuery:
     def __init__(self):
         self.SQL_HOST = os.environ.get("SQL_HOST", None) # Defaults to using localhost/Cloud SQL Proxy
-        self.DB_PORT  = os.environ.get("DB_PORT", "5432")
+        self.DB_PORT  = os.environ.get("DB_PORT", None)
         self.DB_USER  = os.environ.get("DB_USER", None)
         self.DB_PASS  = os.environ.get("DB_PASS", None)
         self.DB_NAME  = os.environ.get("DB_NAME", None)
