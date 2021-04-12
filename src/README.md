@@ -6,7 +6,7 @@ docker build -t zillow_scraper .
 ```
 Tag container with a GCR uri
 ```
-docker tag randomizer gcr.io/$PROJECT_ID/randomizer
+docker tag zillow_scraper gcr.io/plenary-era-308716/zillow_scraper
 ```
 Push container to Google Container Registry (GCR)
 ```
