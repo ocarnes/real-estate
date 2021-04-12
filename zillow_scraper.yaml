@@ -1,38 +1,54 @@
-containers:
-  - name: zillow_scraper
-    image: gcr.io/plenary-era-308716/zillow_scraper
-  # Set env variables used for database connection
-    env:
-    - name: DB_USER
-      valueFrom:
-        secretKeyRef:
-          name: cloudsql-db-credentials
-          key: username
-    - name: DB_PASS
-      valueFrom:
-        secretKeyRef:
-          name: cloudsql-db-credentials
-          key: password
-    - name: DB_NAME
-      valueFrom:
-        secretKeyRef:
-          name: cloudsql-db-credentials
-          key: dbname
-    - name: SQL_HOST
-      valueFrom:
-        secretKeyRef:
-          name: cloudsql-db-credentials
-          key: sqlhost
-  - name: cloudsql-proxy
-    image: gcr.io/cloudsql-docker/gce-proxy:1.21.0
-    command: ["/cloud_sql_proxy",
-      "-instances=plenary-era-308716:us-central1:denver-real-estate=tcp:3306",
-      "-credential_file=/secrets/cloudsql/sql_credentials.json"]
-    volumeMounts:
-      - name: my-secrets-volume
-        mountPath: /secrets/cloudsql
-        readOnly: true
-    volumes:
-      - name: my-secrets-volume
-        secret:
-          secretName: cloudsql-instance-credentials
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zillow-scraper
+  labels:
+    app: zillow-scraper
+spec:
+  selector:
+      matchLabels:
+        app: zillow-scraper
+  template:
+    metadata:
+      labels:
+        app: zillow-scraper
+    spec:
+      # This section describes the containers that make up the deployment
+      containers:
+        - name: zillow-scraper
+          image: gcr.io/plenary-era-308716/zillow_scraper
+          # Set env variables used for database connection
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: password
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: dbname
+            - name: SQL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: sqlhost
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.21.0
+          command: ["/cloud_sql_proxy",
+            "-instances=plenary-era-308716:us-central1:denver-real-estate=tcp:3306",
+            "-credential_file=/secrets/cloudsql/sql_credentials.json"]
+          volumeMounts:
+            - name: my-secrets-volume
+              mountPath: /secrets/cloudsql
+              readOnly: true
+      volumes:
+        - name: my-secrets-volume
+          secret:
+            secretName: cloudsql-instance-credentials
