@@ -9,8 +9,5 @@
 # Flask app
 App/
 
-# modeling
-EDA/modeling.py
-
 # MacOS file
 .DS_Store
