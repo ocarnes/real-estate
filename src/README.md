@@ -1,4 +1,8 @@
 # README
+## Useful Links ##
+To run Google Cloud commands locally: [Installing SDK](https://cloud.google.com/sdk/docs/install)
+To query Cloud SQL locally: [Connecting to Cloud Auth Proxy](https://cloud.google.com/sql/docs/postgres/quickstart-proxy-test)
+
 ## GKE Commands ##
 Build docker image of scraper
 ```
@@ -24,7 +28,6 @@ kubectl create secret generic cloudsql-db-credentials --from-literal=username=[D
 
 gcloud container clusters get-credentials zillow-scraper-cluster --zone us-central1-f
 ```
-
 Add container from GCR to GKE
 ```
 kubectl create -f cronjob.yaml
@@ -46,7 +49,6 @@ Inspect container
 ```
 kubectl get pods
 ```
-
 Scale down to zero replicas
 ```
 kubectl scale --replicas=0 -f zillow_scraper.yaml
