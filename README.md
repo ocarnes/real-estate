@@ -2,7 +2,7 @@
 ## Intro ##
 [This project is in progress]
 
-This project was created out of my frustration at not being able to gain access to the RESO api without Real Estate Broker credentials. This product is not intended for commercial use and is simply a snapshot of a small section of the Denver real estate market over the past 3 years. Listings are scraped from Zillow using regional boundaries and run through a model created to detect undervalued properties. Further details can be found below.
+This project was created out of my frustration at not being able to gain access to the RESO api without Real Estate Broker credentials. This product is not intended for commercial use and is simply a snapshot of a small section of the Denver real estate market over the past 3 years. Listings are scraped from Zillow using regional boundaries and run through a model created to detect undervalued properties.
 
 ## Data Collection ##
 Data is scraped from Zillow a few times a day using containerized web scraping scripts run on Kubernetes. Updates were originally pulled using Airflow DAGs in Cloud Composer but I ultimately went with CronJobs in GKE because it was substantially cheaper for such a small project.
@@ -15,9 +15,9 @@ Data is uploaded from raw json format into a postgres instance on Cloud SQL. Som
 2. Building Queries (Table name: 'building_query') - json of all units within a building that are listed as 'FOR_SALE' or 'SOLD'. Individual condo listings can be pulled from this and added on the the Map Queries table mentioned previously.
 3. Detailed Listing results (Table name: 'listings_detailed') - json for each individual listing with further listing details not included in Map Queries (ex: listing description)
 
-## Data Cleaning ##
+<!-- ## Data Cleaning ##
 
-<!-- ## Feature Selection ##
+## Feature Selection ##
 
 ## Recommendations ##
 
@@ -44,6 +44,3 @@ Data is uploaded from raw json format into a postgres instance on Cloud SQL. Som
 1. [SQL Alchemy Tutorial](https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_core_sql_expressions.htm)
 2. [Cloud SQL - Kubernetes Sidecar tutorial](https://medium.com/google-cloud/connecting-cloud-sql-kubernetes-sidecar-46e016e07bb4)
 3. [Query Cloud SQL from Cloud Composer (Apache Airflow) task on GCP](https://gist.github.com/Just1B/26d85511a053ce906ea4a2b02fbb3531)
-
-<!-- docker build -t zillowScrape -->
-<!-- docker tag zillowScrape gcr.io/$plenary-era-308716/zillowScrape -->

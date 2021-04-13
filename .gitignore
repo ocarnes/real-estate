@@ -4,14 +4,13 @@
 
 # Jupyter Notebook
 .ipynb_checkpoints
-*.ipynb
-
+*SQLAlchemy_fxns.ipynb
 
 # Flask app
 App/
 
 # modeling
-src/modeling.py
+EDA/modeling.py
 
 # MacOS file
 .DS_Store

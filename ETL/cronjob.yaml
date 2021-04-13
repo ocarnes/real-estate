@@ -23,7 +23,7 @@ spec:
               args:
               - |
                 trap "touch /tmp/pod/main-terminated" EXIT
-                python "./src/scraper.py"
+                python "./ETL/scraper.py"
               env:
                 - name: DB_USER
                   valueFrom:
