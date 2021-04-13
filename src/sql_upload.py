@@ -292,13 +292,3 @@ class CloudQuery:
         self.result = self.connection.execute(command)
         bKeys_in_table = [row[0] for row in self.result]
         self.values = [value for value in self.values if value['buildingId'] not in bKeys_in_table]
-
-#
-# metadata = sqlalchemy.MetaData()
-# metadata.reflect(bind=engine)
-#
-# for tableName in ['listings_detailed', 'listings_query', 'building_query']:
-#     table = metadata.tables[tableName]
-#     command = sqlalchemy.select([sqlalchemy.func.count()]).select_from(table)
-#     result= connection.execute(command)
-#     print(result.fetchall())

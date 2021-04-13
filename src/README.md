@@ -27,22 +27,35 @@ gcloud container clusters get-credentials zillow-scraper-cluster --zone us-centr
 
 Add container from GCR to GKE
 ```
-kubectl create -f zillow_scraper.yaml
+kubectl create -f cronjob.yaml
 ```
 ## Error Inspection ##
+Monitor jobs to see when pods start / if they've run successfully
+```
+kubectl get jobs --watch
+```
+Get pod logs to determine issues
+```
+pods=$(kubectl get pods -l app=zillow-scraper-cron -o jsonpath='{.items[0].metadata.name}')
+
+kubectl logs $pods zillow-scraper
+
+kubectl logs $pods cloud-sql-proxy
+```
 Inspect container
 ```
 kubectl get pods
 ```
-Check container logs to see any errors present
-```
-kubectl logs zillow-scraper-6cfd6b9894-jxjtp zillow-scraper --previous
-```
+
 Scale down to zero replicas
 ```
 kubectl scale --replicas=0 -f zillow_scraper.yaml
 ```
 ## Removing Everything ##
+Removing cronjob
+```
+kubectl delete cronjob zillow-scraper-cron
+```
 Delete GKE clusters
 ```
 gcloud container clusters delete zillow-scraper-cluster --region=us-central1-f

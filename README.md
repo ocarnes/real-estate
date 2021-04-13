@@ -15,7 +15,7 @@ This project was created out of my frustration at not being able to gain access 
 * [To Do](#to-do)
 
 ## Data Collection ##
-Data is scraped from Zillow a few times a day using containerized web scraping scripts run on Kubernetes.
+Data is scraped from Zillow a few times a day using containerized web scraping scripts run on Kubernetes. Updates were originally pulled using Airflow DAGs in Cloud Composer but I ultimately went with CronJobs in GKE because it was substantially cheaper for such a small project. 
 1. Scraping container: The scraping is mostly performed using Python's requests package and data upload is performed with sqlalchemy. I've also included a little selenium script that runs if a captcha is detected.
 2. Authentication container: image for running Cloud SQL proxy to connect the scraping container to Cloud SQL.
 
@@ -53,7 +53,7 @@ Data is uploaded from raw json format into a postgres instance on Cloud SQL. Som
 ## References ##
 1. [SQL Alchemy Tutorial](https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_core_sql_expressions.htm)
 2. [Cloud SQL - Kubernetes Sidecar tutorial](https://medium.com/google-cloud/connecting-cloud-sql-kubernetes-sidecar-46e016e07bb4)
-
+3. [Query Cloud SQL from Cloud Composer (Apache Airflow) task on GCP](https://gist.github.com/Just1B/26d85511a053ce906ea4a2b02fbb3531)
 
 <!-- docker build -t zillowScrape -->
 <!-- docker tag zillowScrape gcr.io/$plenary-era-308716/zillowScrape -->

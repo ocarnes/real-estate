@@ -1,0 +1,84 @@
+# cronjob.yaml
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: zillow-scraper-cron
+  labels:
+    app: zillow-scraper-cron
+spec:
+  schedule: "*/60 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: zillow-scraper-cron
+        spec:
+          # This section describes the containers that make up the deployment
+          containers:
+            - name: zillow-scraper
+              image: gcr.io/plenary-era-308716/zillow_scraper
+              # Set env variables used for database connection
+              command: ["/bin/bash", "-c"]
+              args:
+              - |
+                trap "touch /tmp/pod/main-terminated" EXIT
+                python "./src/scraper.py"
+              env:
+                - name: DB_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudsql-db-credentials
+                      key: username
+                - name: DB_PASS
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudsql-db-credentials
+                      key: password
+                - name: DB_NAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudsql-db-credentials
+                      key: dbname
+                - name: SQL_HOST
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudsql-db-credentials
+                      key: sqlhost
+                - name: DB_PORT
+                  valueFrom:
+                    secretKeyRef:
+                      name: cloudsql-db-credentials
+                      key: dbport
+              volumeMounts:
+              - name: temp-pod
+                mountPath: /tmp/pod/
+            - name: cloud-sql-proxy
+              image: gcr.io/cloudsql-docker/gce-proxy:1.21.0-buster
+              command: ["/bin/bash", "-c"]
+              args:
+              - |
+                /cloud_sql_proxy -instances=plenary-era-308716:us-central1:denver-real-estate=tcp:5432 -credential_file=/secrets/cloudsql/sql_credentials.json &
+                CHILD_PID=$!
+                (while true; do if [[ -f "/tmp/pod/main-terminated" ]]; then kill $CHILD_PID; fi; sleep 1; done) &
+                wait $CHILD_PID
+                if [[ -f "/tmp/pod/main-terminated" ]]; then exit 0; fi
+              securityContext:
+                # The default Cloud SQL proxy image runs as the
+                # "nonroot" user and group (uid: 65532) by default.
+                runAsNonRoot: true
+              volumeMounts:
+                - name: my-secrets-volume
+                  mountPath: /secrets/cloudsql
+                  readOnly: true
+                - name: temp-pod
+                  mountPath: /tmp/pod/
+                  readOnly: true
+          volumes:
+            - name: my-secrets-volume
+              secret:
+                secretName: cloudsql-instance-credentials
+            - name: temp-pod
+              emptyDir:
+
+          restartPolicy: OnFailure
