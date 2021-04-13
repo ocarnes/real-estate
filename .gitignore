@@ -12,3 +12,6 @@ App/
 
 # modeling
 src/modeling.py
+
+# MacOS file
+.DS_Store
