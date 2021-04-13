@@ -4,7 +4,7 @@
 
 This project was created out of my frustration at not being able to gain access to the RESO api without Real Estate Broker credentials. This product is not intended for commercial use and is simply a snapshot of a small section of the Denver real estate market over the past 3 years. Listings are scraped from Zillow using regional boundaries and run through a model created to detect undervalued properties.
 
-For data access instructions, see [notebook]('/EDAAccessGuide.ipynb'). 
+For data access instructions, see [notebook]('/EDA/AccessGuide.ipynb'). 
 
 ## Data Collection ##
 Data is scraped from Zillow a few times a day using containerized web scraping scripts run on Kubernetes. Updates were originally pulled using Airflow DAGs in Cloud Composer but I ultimately went with CronJobs in GKE because it was substantially cheaper for such a small project.
