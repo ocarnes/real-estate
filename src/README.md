@@ -1,7 +1,7 @@
 # README
 ## Useful Links ##
-To run Google Cloud commands locally: [Installing SDK](https://cloud.google.com/sdk/docs/install)
-To query Cloud SQL locally: [Connecting to Cloud Auth Proxy](https://cloud.google.com/sql/docs/postgres/quickstart-proxy-test)
+* To run Google Cloud commands locally: [Installing SDK](https://cloud.google.com/sdk/docs/install)
+* To query Cloud SQL locally: [Connecting to Cloud Auth Proxy](https://cloud.google.com/sql/docs/postgres/quickstart-proxy-test)
 
 ## GKE Commands ##
 Build docker image of scraper
